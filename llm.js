@@ -24,7 +24,7 @@ Strict instructions:
 {
   "date": "${date}",
   "title": "No known historical event",
-  "description": "There are no verified events for this date"
+  "description": "No verified events today. Perfect excuse to start a new tradition!"
 }
 `;
 
@@ -55,8 +55,8 @@ Strict instructions:
     // Fallback por si acaso
     return {
         date: date,
-        title: "No Historical Event Today",
-        description: "No verified events today. Perfect excuse to start a new tradition!"
+        title: "Loading...",
+        description: "Just a few seconds while we generate today’s ephemeris…"
     };
   }
 }
