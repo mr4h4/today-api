@@ -55,8 +55,8 @@ Strict instructions:
     // Fallback por si acaso
     return {
         date: date,
-        title: "Loading...",
-        description: "Just a few seconds while we generate today’s ephemeris…"
+        title: "Something went wrong",
+        description: "We’re having trouble loading today’s highlights. Please try again later."
     };
   }
 }
