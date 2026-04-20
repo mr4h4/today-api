@@ -66,7 +66,7 @@ Strict instructions:
       throw new Error(data.error?.message || 'Error en la petición');
     }
 
-    // En Gemini 2.x la estructura sigue siendo la misma
+    // Estructura prompt Gemini
     const text = data.candidates[0].content.parts[0].text;
     const cleanJson = text.replace(/```json|```/g, "").trim();
     
@@ -76,7 +76,6 @@ Strict instructions:
     console.error("❌ Error motor Gemini 2.5:", err.message);
     // Fallback por si acaso
     return {
-        date: date,
         title: "Something went wrong",
         description: "We’re having trouble loading today’s highlights. Please try again later."
     };
