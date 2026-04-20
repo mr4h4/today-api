@@ -4,10 +4,7 @@ export async function generateHolidayJSON(date) {
   const apiKey = process.env.GEMINI_API_KEY;
   
   // USAMOS EL MODELO QUE TU KEY SÍ TIENE: gemini-2.5-flash
-  //const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
-  //OPENROUTER
-  const url = "https://openrouter.ai/api/v1/chat/completions";
+  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
 const promptText = `
 Context: You are a historian and expert chronicler of globally recognized historical events and international observances.
@@ -56,24 +53,11 @@ Strict instructions:
   try {
     const response = await fetch(url, {
       method: 'POST',
-      //PARA GEMINI
-      //headers: { 'Content-Type': 'application/json' },
-      //body: JSON.stringify({
-        //contents: [{ parts: [{ text: promptText }] }]
-      headers: {
-          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: "openrouter/elephant-alpha",
-          messages: [
-            {
-              role: "user",
-              content: promptText
-            }
-          ]
-        })
-      });
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: promptText }] }]
+      })
+    });
 
     const data = await response.json();
 
@@ -82,15 +66,14 @@ Strict instructions:
       throw new Error(data.error?.message || 'Error en la petición');
     }
 
-    // En Gemini 2.x la estructura sigue siendo la misma
-    //const text = data.candidates[0].content.parts[0].text;
-    const text = data.choices[0].message.content;
+    // Estructura prompt Gemini
+    const text = data.candidates[0].content.parts[0].text;
     const cleanJson = text.replace(/```json|```/g, "").trim();
     
     return JSON.parse(cleanJson);
 
   } catch (err) {
-    console.error("❌ Error:", err.message);
+    console.error("❌ Error motor Gemini 2.5:", err.message);
     // Fallback por si acaso
     return {
         title: "Something went wrong",

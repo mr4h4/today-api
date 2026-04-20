@@ -44,6 +44,7 @@ app.get("/api/today", async (req, res) => {
 
         // 👇 añadimos la fecha al JSON
         const result = {
+            date: today,
             ...holiday
         };
 
